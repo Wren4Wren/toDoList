@@ -1,7 +1,10 @@
 const { useState } = require("react");
 
 const ToDo = ({ task, removeHandler, archive, index }) => {
-  const [complete, setComplete] = useState(false);
+  const [ complete, setComplete ] = useState( false );
+  const [ isEditing, setEditing ] = useState( false )
+  
+  
 
   return (
     <div className="Options">
@@ -27,7 +30,7 @@ const ToDo = ({ task, removeHandler, archive, index }) => {
       <button
         type="button"
         className="Archive"
-        onClick={() => archive(archive)}
+        onClick={() => archive(index)}
       >
         Archive
       </button>

@@ -16,11 +16,10 @@ const App = () => {
     storedTask.splice(index, 1);
     setTask(storedTask);
   };
-
-  // const archive = ( archive ) => {
-  //   let loggedTask = [ ...task ]
-  //   loggedTask.append(i)
-  // }
+  // Not able to make function work yet, but working progress...
+  const archive = (index) => {
+    archive.push(...setTask.splice(index, 1));
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -29,34 +28,47 @@ const App = () => {
     }
   };
 
+  function editTask(index) {
+    const editedTaskList = task.map((task) => {
+      if (index === task.index) {
+        return { ...task, setInput };
+      }
+      return task;
+    });
+    editTask(editedTaskList);
+  }
+
   return (
     <div className="App">
-      <div className="Heading" >
-      <h1 className="Title">To-Do List</h1>
+      <div className="Heading">
+        <h1 className="Title">To-Do List</h1>
       </div>
       <div className="Bar">
-      <input
-        className="Tasks"
-        type="text"
-        value={input}
-        placeholder="Eg. Buy eggs"
-        onKeyDown={handleKeyDown}
-        onChange={(e) => setInput(e.target.value)}
-      ></input>
-      <button type="button" className="Add" onClick={submitHandler}>
-        Add
-      </button>
+        <input
+          className="Tasks"
+          type="text"
+          value={input}
+          placeholder="Eg. Buy eggs"
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setInput(e.target.value)}
+        ></input>
+        <button type="button" className="Add" onClick={submitHandler}>
+          Add
+        </button>
       </div>
-      {task.map((task, index, archive) => (
+      {task.map((task, index) => (
         <ToDo
-          key={ task }
-          index={ index }
+          key={task}
+          index={index}
           task={ task }
-          removeHandler={ removeHandler } />
-      ) ) }
-          <div className="Subheader">
-            <h1 className="Title">Archived</h1>
-          </div>
+          editTask={editTask}
+          archive={archive}
+          removeHandler={removeHandler}
+        />
+      ))}
+      <div className="Subheader">
+        <h1 className="Title">Archived</h1>
+      </div>
     </div>
   );
 };
